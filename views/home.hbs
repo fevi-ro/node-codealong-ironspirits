@@ -3,3 +3,31 @@
     <h1>Welcome</h1>
 
     <p>IronSpirits provides best spirits in market</p>
+
+
+<div id="search-form" class="form-container">
+    <p>Searh products</p>
+    <form action="/products" method="GET" >
+    <label >
+Maximum price:
+        <input type="number" min="1" name="maxPrice">
+</label>
+        <button>Submit</button>
+    </form>
+</div>
+
+
+<div id="create-form" class="form-container">
+    <p>Create products</p>
+    <form action="/newProducts" method="POST" >
+    <label >
+Product title
+        <input type="text" name="title">
+</label>
+   <label >
+Product price
+        <input type="number" min="1" name="price">
+</label>
+        <button>Save product</button>
+    </form>
+</div>
