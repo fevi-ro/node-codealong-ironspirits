@@ -35,6 +35,17 @@ app.get("/contact", (req, res, next) => {
     res.render("contact");
 });
 
+
+app.get("/products", (req, res, next) => {
+
+    Product.find()
+        .then(productsArr => {
+            res.render("productList", { products: productsArr });
+        })
+        .catch(error => console.log("error getting products from DB", error));
+})
+
+/*  GET each product from DB
 app.get("/limoncello", (req, res, next) => {
 
     // res.render("view", info);
@@ -71,8 +82,22 @@ app.get("/tequila", (req, res, next) => {
         })
         .catch(error => console.log(error));
 });
+*/
 
 
+
+//GET all products from db
+//productId is a placeholder, it's a name we choose
+app.get("/products/:productId", (req, res, next) => {
+
+    Product.findById(req.params.productId)
+        .then((productDetails) => {
+            res.render("product", productDetails);
+        })
+        .catch(error => console.log(error));
+})
+
+//
 
 
 app.listen(3001, () => {
