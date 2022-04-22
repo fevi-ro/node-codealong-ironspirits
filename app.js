@@ -1,6 +1,7 @@
 const express = require('express');
+const Product = require('./models/Product.model');
 const app = express();
-
+const mongoose = require('mongoose');
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
 
@@ -10,6 +11,10 @@ app.use(express.static('public')); // must be placed allways after const app = e
 //app.get(path, code);
 //path for homepage "/"
 
+mongoose
+    .connect('mongodb://localhost/ironborn-ecommerce')
+    .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
+    .catch(err => console.error('Error connecting to mongo', err));
 
 /* Routes */
 
@@ -33,43 +38,38 @@ app.get("/contact", (req, res, next) => {
 app.get("/limoncello", (req, res, next) => {
 
     // res.render("view", info);
+    Product.findOne({ title: 'Limoncello' })
+        .then((productDetails) => {
+            res.render("product", productDetails);
+            console.log('product found')
+        })
+        .catch(error => console.log(error));
 
-    const data = {
-        title: "Limoncello",
-        price: 10,
-        imageFile: "mouri 1 y.jpg",
-        stores: ["Online", "Albacete", "Freiburg", "Amsterdam"]
-    }
 
-    res.render("product", data);
 });
 
 app.get("/whisky", (req, res, next) => {
 
-    // res.render("view", info);
-
-    const data = {
-        title: "Whisky",
-        price: 80,
-        imageFile: "mourimou.jpg",
-        stores: ["Online", "Berlin", "Paris", "Rome"]
-    }
-
-    res.render("product", data);
+    //res.render("view", info);
+    Product.findOne({ title: 'Single Malt Whisky Yamakazi' })
+        .then((productDetails) => {
+            res.render("product", productDetails);
+            console.log(productDetails)
+        })
+        .catch(error => console.log(error));
 });
+
+
 
 app.get("/tequila", (req, res, next) => {
 
     // res.render("view", info);
-
-    const data = {
-        title: "Tequila",
-        price: 20,
-        imageFile: "mourisofa.jpg",
-        stores: ["Online", "Athens", "Santorini", "Porto"]
-    }
-
-    res.render("product", data);
+    Product.findOne({ title: "Tequila Don Julio" })
+        .then((productDetails) => {
+            res.render("product", productDetails);
+            console.log('product found')
+        })
+        .catch(error => console.log(error));
 });
 
 
